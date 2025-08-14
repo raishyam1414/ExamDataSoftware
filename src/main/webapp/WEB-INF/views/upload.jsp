@@ -49,6 +49,11 @@
     </div>
 
     <div class="upload-body">
+		<div class="mb-3">
+		    <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-secondary">
+		      <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+		    </a>
+		  </div>
       <c:if test="${not empty success}">
         <div class="alert alert-success alert-custom">
           <i class="fas fa-check-circle me-2"></i>${success}

@@ -543,7 +543,7 @@
                         <i class="fas fa-eraser"></i>
                         Clear Filters
                     </button>
-                    <a href="questions/upload" class="btn btn-secondary">
+                    <a href="${pageContext.request.contextPath}/questions/upload" class="btn btn-secondary">
                         <i class="fas fa-cloud-upload-alt"></i>
                         Upload New File
                     </a>
