@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.excelFileUpload.ExamDataUpload.Entity.UserLogin;
 import com.excelFileUpload.ExamDataUpload.Repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class LoginController {
 	
@@ -40,6 +42,12 @@ public class LoginController {
 
         model.addAttribute("username", username);
         return "dashboard";
+    }
+    
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/loginPage";
     }
 
 }

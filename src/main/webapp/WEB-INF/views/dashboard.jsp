@@ -54,6 +54,39 @@
             text-align: center;
             margin-bottom: 40px;
             animation: slideDown 1s ease-out;
+            position: relative;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--danger-gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
         }
 
         @keyframes slideDown {
@@ -436,6 +469,24 @@
                 right: 0;
                 margin-bottom: 20px;
             }
+
+            .logout-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                align-self: center;
+            }
+
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        function exportData() {
+            exportToExcel();
         }
     </style>
 </head>
@@ -446,14 +497,18 @@
 
     <div class="container">
         <header class="header">
+            <button class="logout-btn" onclick="confirmLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
             <div class="logo">
-                <img src="${pageContext.request.contextPath}/images/etsBlackLogo.png" alt="ETS Logo" class="logo">
+				<img src="${pageContext.request.contextPath}/images/etsBlackLogo.png" style="height:69px" alt="ETS Logo" class="logo">
             </div>
             <h1>Exam Data Dashboard</h1>
             <p class="subtitle">Intelligent Question Management System</p>
         </header>
 
-        <div class="floating-stats" id="floatingStats">
+        <!--<div class="floating-stats" id="floatingStats">
             <div class="stat-item">
                 <i class="fas fa-database"></i>
                 <span>Total Questions: <strong id="totalQuestions">0</strong></span>
@@ -466,7 +521,7 @@
                 <i class="fas fa-clock"></i>
                 <span id="currentTime"></span>
             </div>
-        </div>
+        </div>-->
 
         <!-- Success/Error Messages -->
         <c:if test="${not empty message}">
@@ -543,7 +598,7 @@
                         <i class="fas fa-eraser"></i>
                         Clear Filters
                     </button>
-                    <a href="${pageContext.request.contextPath}/questions/upload" class="btn btn-secondary">
+                    <a href="questions/upload" class="btn btn-secondary">
                         <i class="fas fa-cloud-upload-alt"></i>
                         Upload New File
                     </a>
@@ -704,10 +759,26 @@
             });
         }
 
-        function confirmDelete() {
-            const workorder = document.querySelector('input[name="workorder"]').value;
-            return confirm(`Are you sure you want to delete workorder "${workorder}"? This action cannot be undone.`);
-        }
+		<script>
+		function confirmDelete(event) {
+		    const input = document.querySelector('input[name="workorder"]');
+		    
+		    // If empty, let HTML5 required validation handle it
+		    if (!input.value.trim()) {
+		        input.reportValidity(); // Show browser's required message
+		        return false; // Stop function
+		    }
+
+		    // Show confirmation dialog
+		    if (!confirm(`Are you sure you want to delete workorder "${input.value}"? This action cannot be undone.`)) {
+		        event.preventDefault(); // Stop form submission if cancel
+		        return false;
+		    }
+		    
+		    return true; // Allow form submit
+		}
+		</script>
+
 
         function exportToExcel() {
             const table = document.getElementById('questionsTable');
@@ -892,8 +963,16 @@
             }, 1000);
         }
 
-        function exportData() {
-            exportToExcel();
+        function confirmLogout() {
+            const confirmDialog = confirm('Are you sure you want to logout?');
+            if (confirmDialog) {
+                showLoading();
+                // Simulate logout process
+                setTimeout(() => {
+                    // Redirect to logout endpoint
+                    window.location.href = '/logout';
+                }, 1000);
+            }
         }
 
         function showLoading() {
