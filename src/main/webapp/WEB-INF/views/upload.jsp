@@ -47,6 +47,15 @@
       <h2><i class="fas fa-upload me-3"></i>Question Bank Excel Upload</h2>
       <p class="mb-0">Upload your Excel file with questions and validation will be performed automatically</p>
     </div>
+	
+	<!-- Logout Button Fixed in Top Right -->
+	<div style="position: fixed; top: 20px; right: 20px; z-index: 999;">
+	    <form action="/logout" method="get" style="margin:0;">
+	        <button type="submit" class="btn btn-danger" style="padding: 8px 15px; font-weight: bold;">
+	            <i class="fas fa-sign-out-alt me-1"></i> Logout
+	        </button>
+	    </form>
+	</div>
 
     <div class="upload-body">
 		<div class="mb-3">
