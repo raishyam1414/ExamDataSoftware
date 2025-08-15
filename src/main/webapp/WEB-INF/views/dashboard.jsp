@@ -327,6 +327,11 @@
             gap: 10px;
         }
 
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+
         .table-responsive {
             overflow-x: auto;
             max-height: 70vh;
@@ -483,10 +488,17 @@
                 flex-direction: column;
                 align-items: center;
             }
-        }
 
-        function exportData() {
-            exportToExcel();
+            .table-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -507,21 +519,6 @@
             <h1>Exam Data Dashboard</h1>
             <p class="subtitle">Intelligent Question Management System</p>
         </header>
-
-        <!--<div class="floating-stats" id="floatingStats">
-            <div class="stat-item">
-                <i class="fas fa-database"></i>
-                <span>Total Questions: <strong id="totalQuestions">0</strong></span>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-filter"></i>
-                <span>Filtered: <strong id="filteredCount">0</strong></span>
-            </div>
-            <div class="stat-item">
-                <i class="fas fa-clock"></i>
-                <span id="currentTime"></span>
-            </div>
-        </div>-->
 
         <!-- Success/Error Messages -->
         <c:if test="${not empty message}">
@@ -612,13 +609,13 @@
                 <i class="fas fa-trash-alt"></i>
                 Quick Delete
             </div>
-            <form id="deleteForm" action="/dashboard/delete" method="post">
+            <form id="deleteForm" action="/dashboard/delete" method="post" onsubmit="return confirmDelete(event)">
                 <div class="form-grid" style="grid-template-columns: 1fr auto;">
                     <div class="input-group">
                         <i class="fas fa-id-card input-icon"></i>
                         <input type="text" name="workorder" class="input-field" placeholder="Enter Workorder ID to delete" required>
                     </div>
-                    <button type="submit" class="btn btn-danger" onclick="return confirmDelete()">
+                    <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
                         Delete
                     </button>
@@ -712,10 +709,6 @@
     <script>
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            updateStats();
-            updateTime();
-            setInterval(updateTime, 1000);
-            
             // Add loading animation for forms
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
@@ -724,29 +717,6 @@
                 });
             });
         });
-
-        function updateStats() {
-            const tableRows = document.querySelectorAll('#tableBody tr');
-            let totalQuestions = 0;
-            
-            // Count only data rows (exclude placeholder row)
-            tableRows.forEach(row => {
-                if (row.cells.length > 1 && !row.querySelector('td[colspan]')) {
-                    totalQuestions++;
-                }
-            });
-            
-            const filteredCount = totalQuestions;
-            
-            document.getElementById('totalQuestions').textContent = totalQuestions;
-            document.getElementById('filteredCount').textContent = filteredCount;
-        }
-
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById('currentTime').textContent = timeString;
-        }
 
         function clearFilters() {
             const inputs = document.querySelectorAll('.input-field');
@@ -759,26 +729,23 @@
             });
         }
 
-		<script>
-		function confirmDelete(event) {
-		    const input = document.querySelector('input[name="workorder"]');
-		    
-		    // If empty, let HTML5 required validation handle it
-		    if (!input.value.trim()) {
-		        input.reportValidity(); // Show browser's required message
-		        return false; // Stop function
-		    }
+        function confirmDelete(event) {
+            const input = document.querySelector('input[name="workorder"]');
+            
+            // If empty, let HTML5 required validation handle it
+            if (!input.value.trim()) {
+                input.reportValidity(); // Show browser's required message
+                return false; // Stop function
+            }
 
-		    // Show confirmation dialog
-		    if (!confirm(`Are you sure you want to delete workorder "${input.value}"? This action cannot be undone.`)) {
-		        event.preventDefault(); // Stop form submission if cancel
-		        return false;
-		    }
-		    
-		    return true; // Allow form submit
-		}
-		</script>
-
+            // Show confirmation dialog
+            if (!confirm('Are you sure you want to delete workorder "' + input.value + '"? This action cannot be undone.')) {
+                event.preventDefault(); // Stop form submission if cancel
+                return false;
+            }
+            
+            return true; // Allow form submit
+        }
 
         function exportToExcel() {
             const table = document.getElementById('questionsTable');

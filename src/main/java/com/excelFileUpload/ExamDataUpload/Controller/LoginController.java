@@ -32,12 +32,12 @@ public class LoginController {
 
         if (user == null) {
             model.addAttribute("error", "User not found!");
-            return "loginPage";
+            return "login";
         }
 
         if (!user.getPassword().equals(password)) {
             model.addAttribute("error", "Invalid password!");
-            return "loginPage";
+            return "login";
         }
 
         model.addAttribute("username", username);
