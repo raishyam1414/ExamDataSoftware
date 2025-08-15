@@ -19,6 +19,14 @@ public class SecurityConfig {
             )
             .formLogin(login -> login.disable()) // Disable form login
             .httpBasic(basic -> basic.disable()); // Disable basic auth
+        http.logout(logout -> logout
+                .logoutUrl("/logout")           // keep your logout endpoint
+                .logoutSuccessUrl("/loginPage")     // redirect here after logout
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+        );
+
 
         return http.build();
     }
