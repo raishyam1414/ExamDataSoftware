@@ -343,26 +343,64 @@
             background: rgba(255, 255, 255, 0.95);
         }
 
-        .data-table th {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 18px 15px;
-            text-align: left;
-            font-weight: 600;
-            color: var(--text-primary);
-            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
+		.data-table th {
+		    background: rgba(102, 126, 234, 0.95); /* Increased opacity for better coverage */
+		    padding: 18px 15px;
+		    text-align: left;
+		    font-weight: 600;
+		    color: var(--text-primary);
+		    border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+		    position: sticky;
+		    top: 0;
+		    z-index: 100; /* Increased z-index significantly */
+		    backdrop-filter: blur(10px); /* Add backdrop filter for better separation */
+		    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to create separation */
+		}
 
-        .data-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: background-color 0.3s ease;
-            max-width: 200px;
-            word-wrap: break-word;
-            vertical-align: top;
-        }
+		/* Alternative approach - if you want a solid background */
+		.data-table th.solid-header {
+		    background: #667eea; /* Solid color instead of rgba */
+		    color: white;
+		    position: sticky;
+		    top: 0;
+		    z-index: 100;
+		    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		/* Ensure the table container has proper stacking context */
+		.table-responsive {
+		    overflow-x: auto;
+		    max-height: 70vh;
+		    position: relative; /* Add this to create stacking context */
+		    z-index: 1; /* Base z-index for the container */
+		}
+
+		/* Make sure table cells stay behind headers */
+		.data-table td {
+		    padding: 15px;
+		    border-bottom: 1px solid rgba(0,0,0,0.05);
+		    transition: background-color 0.3s ease;
+		    max-width: 200px;
+		    word-wrap: break-word;
+		    vertical-align: top;
+		    position: relative;
+		    z-index: 1; /* Lower z-index than headers */
+		}
+
+		/* Additional fix for webkit browsers */
+		.data-table thead {
+		    position: sticky;
+		    top: 0;
+		    z-index: 100;
+		}
+
+		/* For even better compatibility, you can also add this */
+		.data-table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    background: rgba(255, 255, 255, 0.95);
+		    position: relative; /* Ensure proper stacking context */
+		}
 
         .data-table tr:hover td {
             background: rgba(102, 126, 234, 0.05);
