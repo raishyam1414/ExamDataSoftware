@@ -358,7 +358,6 @@
             </div>
 
             <button type="submit" class="btn" id="sendOtpBtn">
-                <span class="loading-spinner"></span>
                 <span class="btn-text">
                     <i class="fas fa-paper-plane"></i> Send OTP to Email
                 </span>
