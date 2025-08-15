@@ -19,7 +19,7 @@ public class DashboardController {
     @Autowired
     private QuestionRepository examDataRepository;
 
-    @GetMapping
+    @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         model.addAttribute("questions", examDataRepository.findAll());
         return "dashboard";

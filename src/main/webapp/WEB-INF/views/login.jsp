@@ -22,11 +22,8 @@
             text-align: center;
         }
         h1 { margin-bottom: 1rem; }
-        .logo {
-            width: 120px;
-            height: auto;
-        }
-        .form-group { margin-bottom: 1rem; text-align: left; }
+        .logo { width: 120px; height: auto; }
+        .form-group { margin-bottom: 1rem; text-align: left; position: relative; }
         .form-group label { display: block; margin-bottom: .5rem; }
         .form-control {
             width: 100%;
@@ -34,6 +31,15 @@
             border: 2px solid #e1e5e9;
             border-radius: 8px;
             font-size: 1rem;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #666;
+            user-select: none;
         }
         .btn {
             width: 100%;
@@ -88,7 +94,8 @@
 
             <div class="form-group">
                 <label>Password:</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                <span class="toggle-password" id="togglePassword" onclick="togglePassword()">👁️</span>
             </div>
 
             <button type="submit" class="btn">Sign In</button>
@@ -97,5 +104,20 @@
         <!-- Forgot Password Button -->
         <a href="/forgot-password" class="forgot-btn">Forgot Password?</a>
     </div>
+
+	<script>
+	    function togglePassword() {
+	        var pwd = document.getElementById("password");
+	        var toggle = document.getElementById("togglePassword");
+
+	        if (pwd.type === "password") {
+	            pwd.type = "text";
+	            toggle.textContent = "🙈"; 
+	        } else {
+	            pwd.type = "password";
+	            toggle.textContent = "👁️";
+	        }
+	    }
+	</script>
 </body>
 </html>

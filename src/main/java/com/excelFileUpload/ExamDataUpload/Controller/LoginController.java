@@ -1,6 +1,7 @@
 package com.excelFileUpload.ExamDataUpload.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class LoginController {
 	
 	@Autowired
     private UserRepository userRepository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
     
     @GetMapping("/loginPage")
     public String showLoginPage() {
@@ -35,19 +39,20 @@ public class LoginController {
             return "login";
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             model.addAttribute("error", "Invalid password!");
             return "login";
         }
 
         model.addAttribute("username", username);
-        return "dashboard";
+        return "redirect:/dashboard/dashboard";
     }
+
     
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/loginPage";
+        return "login";
     }
     
 }

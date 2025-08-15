@@ -547,6 +547,7 @@
 
     <div class="container">
         <header class="header">
+			<form id="logoutForm" action="/logout" method="post" style="display:none;"></form>
             <button class="logout-btn" onclick="confirmLogout()">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
@@ -968,17 +969,19 @@
             }, 1000);
         }
 
-        function confirmLogout() {
-            const confirmDialog = confirm('Are you sure you want to logout?');
-            if (confirmDialog) {
-                showLoading();
-                // Simulate logout process
-                setTimeout(() => {
-                    // Redirect to logout endpoint
-                    window.location.href = '/logout';
-                }, 1000);
-            }
-        }
+		function showLoading() {
+		    console.log('Logging out...');
+		}
+
+		function confirmLogout() {
+		    const confirmDialog = confirm('Are you sure you want to logout?');
+		    if (confirmDialog) {
+		        showLoading();
+		        setTimeout(() => {
+		            document.getElementById("logoutForm").submit();
+		        }, 500);
+		    }
+		}
 
         function showLoading() {
             document.getElementById('loadingOverlay').style.display = 'flex';
