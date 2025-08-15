@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Login - Exam Upload</title>
+    <title>Reset Password</title>
     <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -14,7 +14,7 @@
         }
         .container {
             background: #fff;
-            padding: 12px 35px 18px;
+            padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             width: 100%;
@@ -22,10 +22,6 @@
             text-align: center;
         }
         h1 { margin-bottom: 1rem; }
-        .logo {
-            width: 120px;
-            height: auto;
-        }
         .form-group { margin-bottom: 1rem; text-align: left; }
         .form-group label { display: block; margin-bottom: .5rem; }
         .form-control {
@@ -44,19 +40,6 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 0.5rem;
-        }
-        .forgot-btn {
-            width: 93%;
-            padding: .75rem;
-            background: #f5f5f5;
-            border: 1px solid #ccc;
-            color: #333;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
         }
         .error {
             background: #fee;
@@ -66,36 +49,43 @@
             margin-bottom: 1rem;
             border-left: 4px solid #c33;
         }
+        .success {
+            background: #e6ffed;
+            color: #2d7a46;
+            padding: .75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7a46;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Logo -->
-        <img src="<c:url value='/images/etsBlackLogo.png'/>" alt="ETS Logo" class="logo">
-
-        <h1>Exam Upload</h1>
-        <p>Secure Question Management</p>
+		<img src="<c:url value='/images/etsBlackLogo.png'/>" alt="ETS Logo" class="logo" style="height: 51px;">
+        <h1>Reset Password</h1>
 
         <c:if test="${not empty error}">
             <div class="error">${error}</div>
         </c:if>
 
-        <form action="/login" method="post">
+        <c:if test="${not empty success}">
+            <div class="success">${success}</div>
+        </c:if>
+
+        <form action="/forgot-password/reset-password" method="post">
+			
             <div class="form-group">
-                <label>Email:</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter your email" required>
+                <label>New Password:</label>
+                <input type="password" name="newPassword" class="form-control" placeholder="Enter new password" required>
             </div>
 
             <div class="form-group">
-                <label>Password:</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                <label>Confirm Password:</label>
+                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm new password" required>
             </div>
 
-            <button type="submit" class="btn">Sign In</button>
+            <button type="submit" class="btn">Reset Password</button>
         </form>
-
-        <!-- Forgot Password Button -->
-        <a href="/forgot-password" class="forgot-btn">Forgot Password?</a>
     </div>
 </body>
 </html>
