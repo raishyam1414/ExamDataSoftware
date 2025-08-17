@@ -44,7 +44,7 @@ public class UserService {
     @Transactional
     public boolean updatePassword(String email, String newPassword) {
         try {
-        	UserLogin user = findByUsername(email);
+        	UserLogin user = findByEmail(email);
             if (user == null) {
                 logger.warn("Attempted to update password for non-existent user: {}", email);
                 return false;

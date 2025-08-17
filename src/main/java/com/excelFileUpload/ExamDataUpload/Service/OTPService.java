@@ -16,7 +16,6 @@ public class OTPService {
     private static final Logger logger = LoggerFactory.getLogger(OTPService.class);
     private final SecureRandom secureRandom = new SecureRandom();
     
-    // You can implement Redis-based storage here for production
     private final Map<String, OTPInfo> otpStorage = new ConcurrentHashMap<>();
 
     public static class OTPInfo {
@@ -107,7 +106,6 @@ public class OTPService {
         return otpInfo != null ? otpInfo.getAttempts() : 0;
     }
 
-    // Cleanup method - you might want to run this as a scheduled task
     public void cleanupExpiredOTPs() {
         otpStorage.entrySet().removeIf(entry -> entry.getValue().isExpired());
         logger.info("Cleaned up expired OTPs");

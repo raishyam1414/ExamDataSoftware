@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-<title>Login - Exam Upload</title>
+<title>Register - Exam Upload</title>
 <style>
 body {
 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -31,6 +31,7 @@ padding: .75rem;
 border: 2px solid #e1e5e9;
 border-radius: 8px;
 font-size: 1rem;
+box-sizing: border-box;
 }
 .toggle-password {
 position: absolute;
@@ -52,7 +53,7 @@ border-radius: 8px;
 cursor: pointer;
 margin-bottom: 0.5rem;
 }
-.forgot-btn {
+.login-btn {
 width: 93%;
 padding: .75rem;
 background: #f5f5f5;
@@ -63,24 +64,6 @@ border-radius: 8px;
 cursor: pointer;
 text-decoration: none;
 display: inline-block;
-margin-bottom: 0.5rem;
-}
-.register-btn {
-width: 93%;
-padding: .75rem;
-background: linear-gradient(135deg, #28a745, #20c997);
-border: 1px solid #28a745;
-color: white;
-font-weight: bold;
-border-radius: 8px;
-cursor: pointer;
-text-decoration: none;
-display: inline-block;
-}
-.register-btn:hover {
-background: linear-gradient(135deg, #218838, #1ba085);
-color: white;
-text-decoration: none;
 }
 .error {
 background: #fee;
@@ -105,8 +88,8 @@ border-left: 4px solid #363;
 <!-- Logo -->
 <img src="<c:url value='/images/etsBlackLogo.png'/>" alt="ETS Logo" class="logo">
 
-<h1>Exam Upload</h1>
-<p>Secure Question Management</p>
+<h1>Register</h1>
+<p>Create Your Account</p>
 
 <c:if test="${not empty error}">
 <div class="error">${error}</div>
@@ -116,10 +99,15 @@ border-left: 4px solid #363;
 <div class="success">${success}</div>
 </c:if>
 
-<form action="/loginPage" method="post">
+<form action="/register" method="post">
+<div class="form-group">
+<label>Username:</label>
+<input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+</div>
+
 <div class="form-group">
 <label>Email:</label>
-<input type="text" name="username" class="form-control" placeholder="Enter your email" required>
+<input type="email" name="email" class="form-control" placeholder="Enter your email" required>
 </div>
 
 <div class="form-group">
@@ -128,14 +116,11 @@ border-left: 4px solid #363;
 <span class="toggle-password" id="togglePassword" onclick="togglePassword()">👁️</span>
 </div>
 
-<button type="submit" class="btn">Sign In</button>
+<button type="submit" class="btn">Create Account</button>
 </form>
 
-<!-- Forgot Password Button -->
-<a href="/forgot-password" class="forgot-btn">Forgot Password?</a>
-
-<!-- Register Button -->
-<a href="/register" class="register-btn">Create New Account</a>
+<!-- Login Button -->
+<a href="/loginPage" class="login-btn">Already have an account? Sign In</a>
 </div>
 
 <script>

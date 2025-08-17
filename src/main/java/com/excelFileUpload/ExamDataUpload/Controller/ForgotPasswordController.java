@@ -113,7 +113,7 @@ public class ForgotPasswordController {
             }
 
             // Check if user exists
-            UserLogin user = userService.findByUsername(email);
+            UserLogin user = userService.findByEmail(email);
             if (user == null) {
                 // Don't reveal if email exists or not for security
                 logger.warn("Password reset attempted for non-existent email: {}", email);
