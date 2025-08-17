@@ -59,7 +59,7 @@
 
     <div class="upload-body">
 		<div class="mb-3">
-		    <a href="${pageContext.request.contextPath}/dashboard" class="btn btn-secondary">
+		    <a href="${pageContext.request.contextPath}/dashboard/dashboard" class="btn btn-secondary">
 		      <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
 		    </a>
 		  </div>
@@ -120,7 +120,7 @@
 		      Work Order
 		    </label>
 		    <input type="text" id="workorder" name="workorder" class="form-control" 
-		           placeholder="Enter Work Order ID" required>
+		           placeholder="Enter Work Order ID">
 		  </div>
 		
         <div class="file-upload-area" id="fileUploadArea">

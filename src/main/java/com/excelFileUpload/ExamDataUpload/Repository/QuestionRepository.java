@@ -2,8 +2,10 @@ package com.excelFileUpload.ExamDataUpload.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import com.excelFileUpload.ExamDataUpload.Entity.ExamData;
 
 import java.util.List;
@@ -28,5 +30,9 @@ public interface QuestionRepository extends JpaRepository<ExamData, Long> {
     List<ExamData> filterQuestions(String subject, String topic, String subtopic, String grade,
                                    String difficultyLevel, String question, String workorder);
 
-    int deleteByWorkorder(String workorder);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM ExamData e WHERE e.workorder = :workorder")
+    int deleteByWorkorder(@Param("workorder") String workorder);
+
 }

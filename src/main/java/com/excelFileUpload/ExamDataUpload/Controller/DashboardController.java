@@ -61,7 +61,7 @@ public class DashboardController {
             redirectAttributes.addFlashAttribute("error", "❌ No record found with Workorder '" + workorder + "'.");
         }
 
-        return "redirect:/dashboard";
+        return "redirect:/dashboard/dashboard";
     }
 
 }

@@ -539,6 +539,21 @@
             }
         }
     </style>
+	<style>
+	.alert {
+	    padding: 10px;
+	    margin: 10px 0;
+	    border-radius: 5px;
+	}
+	.alert-success {
+	    background-color: #d4edda;
+	    color: #155724;
+	}
+	.alert-danger {
+	    background-color: #f8d7da;
+	    color: #721c24;
+	}
+	</style>
 </head>
 <body>
     <div class="loading-overlay" id="loadingOverlay">
@@ -634,13 +649,27 @@
                         <i class="fas fa-eraser"></i>
                         Clear Filters
                     </button>
-                    <a href="questions/upload" class="btn btn-secondary">
+                    <a href="/questions/upload" class="btn btn-secondary">
                         <i class="fas fa-cloud-upload-alt"></i>
                         Upload New File
                     </a>
                 </div>
             </form>
         </div>
+		
+		<!-- Success Message -->
+		<c:if test="${not empty message}">
+		    <div class="alert alert-success">
+		        ${message}
+		    </div>
+		</c:if>
+
+		<!-- Error Message -->
+		<c:if test="${not empty error}">
+		    <div class="alert alert-danger">
+		        ${error}
+		    </div>
+		</c:if>
 
         <!-- Delete Card -->
         <div class="glass-card">
@@ -652,7 +681,7 @@
                 <div class="form-grid" style="grid-template-columns: 1fr auto;">
                     <div class="input-group">
                         <i class="fas fa-id-card input-icon"></i>
-                        <input type="text" name="workorder" class="input-field" placeholder="Enter Workorder ID to delete" required>
+						<input type="text" id="workorderInput" name="workorder" class="input-field" placeholder="Enter Workorder ID to delete" required>
                     </div>
                     <button type="submit" class="btn btn-danger">
                         <i class="fas fa-trash"></i>
@@ -768,23 +797,21 @@
             });
         }
 
-        function confirmDelete(event) {
-            const input = document.querySelector('input[name="workorder"]');
-            
-            // If empty, let HTML5 required validation handle it
-            if (!input.value.trim()) {
-                input.reportValidity(); // Show browser's required message
-                return false; // Stop function
-            }
+		document.getElementById('deleteForm').addEventListener('submit', function(event) {
+		    const input = document.getElementById('workorderInput');
 
-            // Show confirmation dialog
-            if (!confirm('Are you sure you want to delete workorder "' + input.value + '"? This action cannot be undone.')) {
-                event.preventDefault(); // Stop form submission if cancel
-                return false;
-            }
-            
-            return true; // Allow form submit
-        }
+		    if (!input.value.trim()) {
+		        input.reportValidity();
+		        event.preventDefault();
+		        return;
+		    }
+
+		    const workorderID = input.value.trim();
+
+		    if (!confirm("Are you sure you want to delete workorder. This action cannot be undone.")) {
+		        event.preventDefault(); 
+		    }
+		});
 
         function exportToExcel() {
             const table = document.getElementById('questionsTable');
